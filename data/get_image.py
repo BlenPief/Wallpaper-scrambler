@@ -21,7 +21,7 @@ def main():
                                     1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                                     2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
                                     2, 2, 3, 3, 3, 3, 3, 3, 3, 3,
-                                    4, 4, 4, 4, 5, 5, 6, 7, 8])
+                                    4, 4, 4, 4, 1, 1, 1, 1, 1, 2])
     
     
     words = random.sample(dick, impossibility)
@@ -36,6 +36,9 @@ def main():
     DIR= WORKDIR + "/backgrounds" #Directory for the pictures
     
 
+    #Decides which image to take
+    number = random.randrange(100)
+
     header={'User-Agent':"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.134 Safari/537.36"
     }
     soup = get_soup(url,header)
@@ -47,21 +50,22 @@ def main():
         ActualImages.append((link,Type))
 
 
-
     ###print images
-    for i , (img , Type) in enumerate( ActualImages[:1]):
+    for i , (img , Type) in enumerate( [ActualImages[number]]):
         try:
             req = urllib2.Request(img, headers={'User-Agent' : header})
             raw_img = urllib2.urlopen(req).read()
 
             cntr = len([i for i in os.listdir(DIR) if image_type in i]) + 1
-            if len(Type)==0:
-                f = open(os.path.join(DIR , image_type + ".jpg"), 'wb')
-                pic_path = "file://" + DIR + '/' + image_type + ".jpg"
-            else :
-                f = open(os.path.join(DIR , image_type + "."+Type), 'wb')
-                pic_path = "file://" + DIR + '/'  + image_type + "." + Type
 
+            picpath = DIR + '/' + image_type + "_" + str(number)
+
+            if len(Type)==0:
+                picpath += ".jpg"
+            else:
+                picpath +=  "." + Type
+
+            f = open(picpath, 'wb')
             f.write(raw_img)
             f.close()
         except Exception as e:
@@ -72,7 +76,7 @@ def main():
    
     # Create temporary file which stores the picture path
     f = open(WORKDIR + "/tempfile.wl", 'w')
-    f.write(pic_path[7:])
+    f.write(picpath)
     f.close()
 
 main()
