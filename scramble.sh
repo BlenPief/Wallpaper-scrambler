@@ -89,9 +89,11 @@ main () {
 		echo -e "\n"
 		case $choice in
 			[nN]* ) newpics $(echo "scale=2;60*$TIMER" | bc) &
-				read -n1 -s; kill $!; echo -e "\n";;
+				pid=$!; disown
+				read -n1 -s; kill $pid; echo -e "\n";;
 			[oO]* ) oldpics $(echo "scale=2;60*$TIMER" | bc) &
-			       	read -n1 -s; kill $!; echo -e "\n";;
+				pid=$!; disown
+			       	read -n1 -s; kill $pid; echo -e "\n";;
 			[tT]* ) echo "The timer is currently set to $TIMER minutes."
 				read -p "Set the timer:  " TIMER; echo;;
 			[eEqQ]* ) break;;
