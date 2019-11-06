@@ -4,13 +4,13 @@
 
 #UTILITIES
 
-DIR="$(readlink -f `dirname $0`)/data"
+DIR="$(readlink -f $(dirname $0))/data"
 
 download_pic () {
 	# Download picture and write path in temporary file
 
-	python $DIR/get_image.py $DIR
-	echo `cat $DIR/tempfile.wl`
+	python2 $DIR/get_image.py $DIR
+	echo $(cat $DIR/tempfile.wl)
 	rm $DIR/tempfile.wl
 }
 
@@ -107,8 +107,3 @@ main () {
 
 
 main
-	
-
-
-
-

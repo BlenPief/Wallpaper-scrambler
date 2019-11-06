@@ -11,7 +11,7 @@ def get_soup(url,header):
 
 def main():
 
-    WORKDIR = sys.argv[1] 
+    WORKDIR = sys.argv[1]
 
     dic = open(WORKDIR + "/dictionary.wl", 'r') #Path of the used dictionary
     dick = dic.readlines()
@@ -22,8 +22,8 @@ def main():
                                     2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
                                     2, 2, 3, 3, 3, 3, 3, 3, 3, 3,
                                     4, 4, 4, 4, 1, 1, 1, 1, 1, 2])
-    
-    
+
+
     words = random.sample(dick, impossibility)
 
     query = ('+'.join(words)).replace("\n", '')
@@ -34,7 +34,7 @@ def main():
 
     #add the directory for your image here
     DIR= WORKDIR + "/backgrounds" #Directory for the pictures
-    
+
 
     #Decides which image to take
     number = random.randrange(100)
@@ -43,7 +43,7 @@ def main():
     }
     soup = get_soup(url,header)
 
-    
+
     ActualImages=[]# contains the link for Large original images, type of  image
     for a in soup.find_all("div",{"class":"rg_meta"}):
         link , Type =json.loads(a.text)["ou"]  ,json.loads(a.text)["ity"]
@@ -69,11 +69,11 @@ def main():
             f.write(raw_img)
             f.close()
         except Exception as e:
-            print "could not load : "+img
-            print e
+            print("could not load : "+img)
+            print(e)
 
 
-   
+
     # Create temporary file which stores the picture path
     f = open(WORKDIR + "/tempfile.wl", 'w')
     f.write(picpath)
